@@ -1,0 +1,7 @@
+User is guessing the reverse measurement based on given regular measurement.
+
+Reverse measurement is dependent on regular measurement.
+
+At the start of the game random regular measurement is generated, reverse measurement is calculated based on regular measurement and answer choices are generated which include reverse measurement as correct answer. Same thing for each turn.
+
+For each turn there is timer.
