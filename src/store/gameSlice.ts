@@ -3,11 +3,18 @@ import { createSlice } from "@reduxjs/toolkit";
 interface InitialState {
   isGameStarted: boolean;
   isGameOver: boolean;
+  roundNumber: number;
 }
 
-const initialState = {
+const initialState: InitialState = {
   isGameStarted: false,
   isGameOver: false,
+
+  /**
+   * Game has multiple rounds.
+   * New game always start with round number 1
+   */
+  roundNumber: 1,
 };
 
 const gameSlice = createSlice({
@@ -17,8 +24,11 @@ const gameSlice = createSlice({
     setIsGameStartedTrue: state => {
       state.isGameStarted = true;
     },
+    incrementRounNumber: state => {
+      state.roundNumber += 1;
+    },
   },
 });
 
-export const { setIsGameStartedTrue } = gameSlice.actions;
+export const gameSliceActions = gameSlice.actions;
 export default gameSlice.reducer;

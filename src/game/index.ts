@@ -53,10 +53,18 @@ export function createQuestionValue() {
 export function createAnswerOptions(correctAnswer: number): number[] {
   // create array lenght of number of choices of reverse measurements and one of them is correct answer
   const arrayLength = NUMBER_OF_CHOICES;
-  const incorrectOptionsList = Array.from(
-    { length: arrayLength - 1 },
-    randomReverseMeasurement
-  );
+  const incorrectOptionsList: number[] = [];
+  while (incorrectOptionsList.length < NUMBER_OF_CHOICES - 1) {
+    const newOption = randomReverseMeasurement();
+
+    // making sure options list does not contain duplicate values
+    if (
+      newOption !== correctAnswer &&
+      !incorrectOptionsList.includes(newOption)
+    ) {
+      incorrectOptionsList.push(newOption);
+    }
+  }
   const allOptions = [...incorrectOptionsList, correctAnswer];
   return shuffleArray(allOptions);
 }

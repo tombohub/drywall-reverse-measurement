@@ -5,7 +5,14 @@ import { type Question } from "../game";
 interface InitialState {
   question: null | number;
   answerOptions: number[];
-  correctAnwer: number | null;
+  correctAnswer: number | null;
+  isAnswerSubmitted: boolean;
+
+  /**
+   * True if answer is correct.
+   * Null is if answer is not yet submitted
+   */
+  isAnswerCorrect: boolean | null;
 }
 
 const initialState: InitialState = {
@@ -14,7 +21,9 @@ const initialState: InitialState = {
    */
   question: null,
   answerOptions: [],
-  correctAnwer: null,
+  correctAnswer: null,
+  isAnswerSubmitted: false,
+  isAnswerCorrect: null,
 };
 
 /**
@@ -27,10 +36,18 @@ const questionSlice = createSlice({
     setNewQuestion: (state, action: PayloadAction<Question>) => {
       state.question = action.payload.questionValue;
       state.answerOptions = action.payload.answerOptions;
-      state.correctAnwer = action.payload.correctAnswer;
+      state.correctAnswer = action.payload.correctAnswer;
     },
+    setIsAnswerSubmitted: (state, action: PayloadAction<boolean>) => {
+      state.isAnswerSubmitted = action.payload;
+    },
+    setIsAnswerCorrect: (state, action: PayloadAction<boolean>) => {
+      state.isAnswerCorrect = action.payload;
+    },
+
+    reset: () => initialState,
   },
 });
 
-export const { setNewQuestion } = questionSlice.actions;
+export const questionActions = questionSlice.actions;
 export default questionSlice.reducer;

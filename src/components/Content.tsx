@@ -6,14 +6,19 @@ import NewGameButton from "./NewGameButton";
 import StartGameButton from "./StartGameButton";
 import { RootState } from "../store";
 import { useSelector } from "react-redux";
+import RulesInfoText from "./RulesInfoText";
+import { useGame } from "../hooks";
+import AnswerResultDisplay from "./AnswerResultDisplay";
 
 export default function Content() {
+  const { isAnswerSubmitted } = useGame();
   const isGameStarted = useSelector(
     (state: RootState) => state.game.isGameStarted
   );
   return (
     <>
       <Header />
+      {!isGameStarted && <RulesInfoText />}
       <Box
         display={"flex"}
         flexDirection={"column"}
@@ -30,6 +35,7 @@ export default function Content() {
             <MultiChoiceGroup />
           </>
         )}
+        {isAnswerSubmitted && <AnswerResultDisplay />}
         <NewGameButton />
       </Box>
     </>
