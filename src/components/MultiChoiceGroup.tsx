@@ -1,10 +1,8 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useState } from "react";
-import { answerChoicesAtom, regularMeasurementAtom } from "../store/store";
-import { useAtom } from "jotai";
-import { randomRegularMeasurement } from "../drywall";
 import { useDebouncedCallback } from "use-debounce";
 import ChoiceButton from "./ChoiceButton";
+import { useGame } from "../hooks";
 
 export default function MultiChoiceGroup() {
   /**
@@ -12,25 +10,21 @@ export default function MultiChoiceGroup() {
    */
   const [userAnswered, setUserAnswered] = useState(false);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
-  const [choicesList] = useAtom(answerChoicesAtom);
-  const [regularMeasurement, setRegularMeasurement] = useAtom(
-    regularMeasurementAtom
-  );
+  const { answerOptions } = useGame();
+
   const resetRegularMeasurementDebounced = useDebouncedCallback(
     resetRegularMeasurement,
     1000
   );
 
-  function resetRegularMeasurement() {
-    setRegularMeasurement(randomRegularMeasurement());
-  }
+  function resetRegularMeasurement() {}
 
   return (
     <>
       {String(isCorrectAnswer)}
       <Box display={"flex"} flexDirection={"column"} gap={2}>
-        {choicesList.map(choice => (
-          <ChoiceButton choice={choice} />
+        {answerOptions.map(option => (
+          <ChoiceButton choice={option} />
         ))}
       </Box>
     </>

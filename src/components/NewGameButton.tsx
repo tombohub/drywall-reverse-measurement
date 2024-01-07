@@ -1,17 +1,18 @@
 import { Button } from "@chakra-ui/react";
 import { RootState } from "../store";
 import { useDispatch } from "react-redux";
-import { createNewQuestion } from "../store/questionSlice";
+import { setNewQuestion } from "../store/questionSlice";
+import { useGame } from "../hooks";
 
 /**
  * Button which starts new game.
  * It appears after the game is over.
  */
 export default function NewGameButton() {
-  const dispatch = useDispatch();
+  const game = useGame();
   return (
     <>
-      <Button onClick={() => dispatch(createNewQuestion())}>New Game</Button>
+      <Button onClick={game.startNewGame}>New Game</Button>
     </>
   );
 }

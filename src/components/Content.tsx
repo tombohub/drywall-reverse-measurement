@@ -3,8 +3,14 @@ import MultiChoiceGroup from "./MultiChoiceGroup";
 import QuestionValue from "./QuestionValue";
 import Header from "./Header";
 import NewGameButton from "./NewGameButton";
+import StartGameButton from "./StartGameButton";
+import { RootState } from "../store";
+import { useSelector } from "react-redux";
 
 export default function Content() {
+  const isGameStarted = useSelector(
+    (state: RootState) => state.game.isGameStarted
+  );
   return (
     <>
       <Header />
@@ -17,8 +23,13 @@ export default function Content() {
         width={"100vw"}
         gap={2}
       >
-        <QuestionValue />
-        <MultiChoiceGroup />
+        {!isGameStarted && <StartGameButton />}
+        {isGameStarted && (
+          <>
+            <QuestionValue />
+            <MultiChoiceGroup />
+          </>
+        )}
         <NewGameButton />
       </Box>
     </>

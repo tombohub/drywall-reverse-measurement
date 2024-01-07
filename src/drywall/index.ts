@@ -22,6 +22,7 @@ const DRYWALL_WIDTH = 48;
 export function calculateReverseMeasurement(measurement: number): number {
   return DRYWALL_WIDTH - measurement;
 }
+
 /**
  * Generate regular measurement along width.
  * @returns measurement

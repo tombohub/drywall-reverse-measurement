@@ -1,22 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createQuestionValue } from "../game";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { type Question } from "../game";
 
-const initialState = {
+interface InitialState {
+  question: null | number;
+  answerOptions: number[];
+  correctAnwer: number | null;
+}
+
+const initialState: InitialState = {
   /**
    * Question value
    */
-  value: createQuestionValue(),
+  question: null,
+  answerOptions: [],
+  correctAnwer: null,
 };
 
+/**
+ * Slice managing question state
+ */
 const questionSlice = createSlice({
   name: "question",
   initialState,
   reducers: {
-    createNewQuestion: state => {
-      state.value = createQuestionValue();
+    setNewQuestion: (state, action: PayloadAction<Question>) => {
+      state.question = action.payload.questionValue;
+      state.answerOptions = action.payload.answerOptions;
+      state.correctAnwer = action.payload.correctAnswer;
     },
   },
 });
 
-export const { createNewQuestion } = questionSlice.actions;
+export const { setNewQuestion } = questionSlice.actions;
 export default questionSlice.reducer;

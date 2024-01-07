@@ -1,15 +1,17 @@
 import { atom } from "jotai";
 import { randomRegularMeasurement } from "../drywall";
-import { getAnswerChoices } from "../game";
+
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "./counterSlice";
 import questionReducer from "./questionSlice";
+import gameReducer from "./gameSlice";
 import { calculateReverseMeasurement } from "../drywall";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     question: questionReducer,
+    game: gameReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;
@@ -28,7 +30,3 @@ export const reverseMeasurementAtom = atom(get =>
   calculateReverseMeasurement(get(regularMeasurementAtom))
 );
 reverseMeasurementAtom.debugLabel = "reverse-measurement";
-
-export const answerChoicesAtom = atom(get =>
-  getAnswerChoices(get(reverseMeasurementAtom))
-);

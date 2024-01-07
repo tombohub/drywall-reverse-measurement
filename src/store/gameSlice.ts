@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface InitialState {
+  isGameStarted: boolean;
+  isGameOver: boolean;
+}
+
 const initialState = {
   isGameStarted: false,
   isGameOver: false,
@@ -9,12 +14,11 @@ const gameSlice = createSlice({
   name: "game",
   initialState,
   reducers: {
-    startGame: state => {
+    setIsGameStartedTrue: state => {
       state.isGameStarted = true;
-      state.isGameOver = false;
     },
   },
 });
 
-export const { startGame } = gameSlice.actions;
+export const { setIsGameStartedTrue } = gameSlice.actions;
 export default gameSlice.reducer;

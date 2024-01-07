@@ -9,7 +9,7 @@ export function numberToStringInches(number: number) {
  * @param include number to include
  * @returns array of numbers
  */
-export function _createRandomIntArrayWithIncludedNumber(
+export function createRandomIntArrayWithIncludedNumber(
   length: number,
   include: number
 ): number[] {
