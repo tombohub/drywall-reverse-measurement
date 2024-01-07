@@ -12,7 +12,7 @@ import AnswerResultDisplay from "./AnswerResultDisplay";
 import ScoreInfo from "./ScoreInfo";
 
 export default function Content() {
-  const { isAnswerSubmitted } = useGame();
+  const { isAnswerSubmitted, isGameOver } = useGame();
   const isGameStarted = useSelector(
     (state: RootState) => state.game.isGameStarted
   );
@@ -30,15 +30,15 @@ export default function Content() {
         gap={2}
       >
         {!isGameStarted && <StartGameButton />}
-        {isGameStarted && (
+        {isGameStarted && !isGameOver && (
           <>
             <QuestionValue />
             <MultiChoiceGroup />
           </>
         )}
-        {isAnswerSubmitted && <AnswerResultDisplay />}
-        <NewGameButton />
-        <ScoreInfo />
+        {isAnswerSubmitted && !isGameOver && <AnswerResultDisplay />}
+        {isGameOver && <ScoreInfo />}
+        {isGameOver && <NewGameButton />}
       </Box>
     </>
   );

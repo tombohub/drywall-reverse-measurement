@@ -1,11 +1,14 @@
-import { Text } from "@chakra-ui/react";
+import { Center, Heading, Text } from "@chakra-ui/react";
 import { useGame } from "../hooks";
 
 export default function ScoreInfo() {
-  const { currentScore } = useGame();
+  const { currentScore, totalQuestions } = useGame();
   return (
     <>
-      <Text>{currentScore}</Text>
+      <Heading>
+        Your score: <br />
+        {currentScore}/{totalQuestions}
+      </Heading>
     </>
   );
 }

@@ -4,10 +4,18 @@ import { questionActions } from "../store/questionSlice";
 import { gameActions } from "../store/gameSlice";
 import { createQuestion, TOTAL_QUESTIONS } from "../game";
 import { useDebouncedCallback } from "use-debounce";
+
 export function useGame() {
   const dispatch = useDispatch();
   const debouncedStartNewRound = useDebouncedCallback(startNewRound, 2000);
+  const debouncedFinishGame = useDebouncedCallback(finishGame, 2000);
 
+  /**
+   * Total questions under the presumption state is used after the game starts
+   */
+  const totalQuestions = useSelector(
+    (state: RootState) => state.game.totalQuestions
+  );
   const currentScore = useSelector((state: RootState) => state.game.score);
 
   const currentQuestionNumber = useSelector(
@@ -32,6 +40,11 @@ export function useGame() {
   );
 
   /**
+   * True if game is over
+   */
+  const isGameOver = useSelector((state: RootState) => state.game.isGameOver);
+
+  /**
    * answer options offered as multi choice
    */
   const answerOptions = useSelector(
@@ -51,8 +64,9 @@ export function useGame() {
    * Starts a new game
    */
   function startNewGame() {
+    dispatch(gameActions.setTotalQuestions(TOTAL_QUESTIONS));
     newQuestion();
-    dispatch(gameActions.setIsGameStartedTrue());
+    dispatch(gameActions.setGameStarted());
   }
 
   function startNewRound() {
@@ -61,7 +75,9 @@ export function useGame() {
     dispatch(gameActions.incrementQuestionNumber());
   }
 
-  function finishGame() {}
+  function finishGame() {
+    dispatch(gameActions.setGameOver());
+  }
   /**
    *Answers the current question
    */
@@ -73,7 +89,7 @@ export function useGame() {
     if (currentQuestionNumber < TOTAL_QUESTIONS) {
       debouncedStartNewRound();
     } else {
-      finishGame();
+      debouncedFinishGame();
     }
   }
 
@@ -89,6 +105,7 @@ export function useGame() {
      * True of game has started
      */
     isGameStarted,
+    isGameOver,
 
     /**
      * answer options offered as multi choice
@@ -106,5 +123,6 @@ export function useGame() {
 
     currentQuestionNumber,
     currentScore,
+    totalQuestions,
   };
 }

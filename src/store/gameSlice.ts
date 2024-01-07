@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface InitialState {
   isGameStarted: boolean;
   isGameOver: boolean;
   questionNumber: number;
-
+  totalQuestions: number;
   /**
    * Keeps track of the score
    */
@@ -20,6 +20,7 @@ const initialState: InitialState = {
    * New game always start with question number 1
    */
   questionNumber: 1,
+  totalQuestions: 0,
   score: 0,
 };
 
@@ -27,7 +28,7 @@ const gameSlice = createSlice({
   name: "game",
   initialState,
   reducers: {
-    setIsGameStartedTrue: state => {
+    setGameStarted: state => {
       state.isGameStarted = true;
     },
     incrementQuestionNumber: state => {
@@ -35,6 +36,12 @@ const gameSlice = createSlice({
     },
     incrementScore: state => {
       state.score += 1;
+    },
+    setGameOver: state => {
+      state.isGameOver = true;
+    },
+    setTotalQuestions: (state, action: PayloadAction<number>) => {
+      state.totalQuestions = action.payload;
     },
     reset: () => initialState,
   },
