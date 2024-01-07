@@ -1,15 +1,17 @@
 import { RootState } from "../store";
 import { useSelector, useDispatch } from "react-redux";
 import { questionActions } from "../store/questionSlice";
-import { gameSliceActions } from "../store/gameSlice";
-import { createQuestion } from "../game";
+import { gameActions } from "../store/gameSlice";
+import { createQuestion, TOTAL_QUESTIONS } from "../game";
 import { useDebouncedCallback } from "use-debounce";
 export function useGame() {
   const dispatch = useDispatch();
   const debouncedStartNewRound = useDebouncedCallback(startNewRound, 2000);
 
-  const currentRoundNumber = useSelector(
-    (state: RootState) => state.game.roundNumber
+  const currentScore = useSelector((state: RootState) => state.game.score);
+
+  const currentQuestionNumber = useSelector(
+    (state: RootState) => state.game.questionNumber
   );
   /**
    * Current question correct answer
@@ -50,22 +52,29 @@ export function useGame() {
    */
   function startNewGame() {
     newQuestion();
-    dispatch(gameSliceActions.setIsGameStartedTrue());
+    dispatch(gameActions.setIsGameStartedTrue());
   }
 
   function startNewRound() {
     dispatch(questionActions.reset());
     newQuestion();
-    dispatch(gameSliceActions.incrementRounNumber());
+    dispatch(gameActions.incrementQuestionNumber());
   }
 
+  function finishGame() {}
   /**
    *Answers the current question
    */
   function submitAnswer(answer: number) {
+    const isCorrectAnswer = correctAnswer === answer;
     dispatch(questionActions.setIsAnswerSubmitted(true));
-    dispatch(questionActions.setIsAnswerCorrect(correctAnswer === answer));
-    debouncedStartNewRound();
+    dispatch(questionActions.setIsAnswerCorrect(isCorrectAnswer));
+    if (isCorrectAnswer) dispatch(gameActions.incrementScore());
+    if (currentQuestionNumber < TOTAL_QUESTIONS) {
+      debouncedStartNewRound();
+    } else {
+      finishGame();
+    }
   }
 
   return {
@@ -95,6 +104,7 @@ export function useGame() {
 
     isAnswerCorrect,
 
-    currentRoundNumber,
+    currentQuestionNumber,
+    currentScore,
   };
 }

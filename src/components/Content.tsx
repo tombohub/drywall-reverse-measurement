@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import RulesInfoText from "./RulesInfoText";
 import { useGame } from "../hooks";
 import AnswerResultDisplay from "./AnswerResultDisplay";
+import ScoreInfo from "./ScoreInfo";
 
 export default function Content() {
   const { isAnswerSubmitted } = useGame();
@@ -37,6 +38,7 @@ export default function Content() {
         )}
         {isAnswerSubmitted && <AnswerResultDisplay />}
         <NewGameButton />
+        <ScoreInfo />
       </Box>
     </>
   );

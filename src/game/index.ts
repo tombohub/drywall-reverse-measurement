@@ -12,9 +12,9 @@ import { createRandomIntArrayWithIncludedNumber, shuffleArray } from "../utils";
 const NUMBER_OF_CHOICES = 4;
 
 /**
- * Number of turns for each game
+ * Total number of questions for each game
  */
-const TOTAL_TURNS = 10;
+export const TOTAL_QUESTIONS = 3;
 
 export interface Question {
   questionValue: number;

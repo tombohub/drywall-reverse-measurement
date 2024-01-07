@@ -14,8 +14,12 @@ interface AnswerOptionButtonProps {
  * Clicking on button user submits his answer
  */
 export default function AnswerOptionButton(props: AnswerOptionButtonProps) {
-  const { submitAnswer, isAnswerSubmitted, correctAnswer, currentRoundNumber } =
-    useGame();
+  const {
+    submitAnswer,
+    isAnswerSubmitted,
+    correctAnswer,
+    currentQuestionNumber,
+  } = useGame();
 
   /**
    * True if this option is the one player clicked
@@ -28,7 +32,7 @@ export default function AnswerOptionButton(props: AnswerOptionButtonProps) {
    */
   useEffect(() => {
     setIsClicked(false);
-  }, [currentRoundNumber]);
+  }, [currentQuestionNumber]);
 
   /**
    * True if this option is correct answer
