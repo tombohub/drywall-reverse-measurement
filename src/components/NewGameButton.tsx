@@ -1,7 +1,4 @@
 import { Button } from "@chakra-ui/react";
-import { RootState } from "../store";
-import { useDispatch } from "react-redux";
-import { setNewQuestion } from "../store/questionSlice";
 import { useGame } from "../hooks";
 
 /**

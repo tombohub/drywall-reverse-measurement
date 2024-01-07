@@ -21,7 +21,6 @@ export default function MultiChoiceGroup() {
 
   return (
     <>
-      {String(isCorrectAnswer)}
       <Box display={"flex"} flexDirection={"column"} gap={2}>
         {answerOptions.map(option => (
           <ChoiceButton choice={option} />
