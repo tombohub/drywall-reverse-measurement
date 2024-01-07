@@ -1,12 +1,11 @@
 import { Button } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
-import { setIsGameStartedTrue } from "../store/gameSlice";
+import { useGame } from "../hooks";
 
 export default function StartGameButton() {
-  const dispatch = useDispatch();
+  const game = useGame();
   return (
     <>
-      <Button onClick={() => dispatch(setIsGameStartedTrue())}>Start</Button>
+      <Button onClick={game.startNewGame}>Start</Button>
     </>
   );
 }
