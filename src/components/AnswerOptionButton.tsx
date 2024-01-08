@@ -1,6 +1,7 @@
 import { Button } from "@chakra-ui/react";
 import { useGame } from "../hooks";
 import { useEffect, useState } from "react";
+import InchesDisplay from "./InchesDisplay";
 
 interface AnswerOptionButtonProps {
   /**
@@ -59,7 +60,7 @@ export default function AnswerOptionButton(props: AnswerOptionButtonProps) {
   return (
     <>
       <Button onClick={handleOnClick} colorScheme={colorScheme()}>
-        {props.answerOption}
+        <InchesDisplay measurement={props.answerOption} />
       </Button>
     </>
   );
