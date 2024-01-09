@@ -4,8 +4,6 @@ import QuestionValue from "./QuestionValue";
 import Header from "./Header";
 import NewGameButton from "./NewGameButton";
 import StartGameButton from "./StartGameButton";
-import { RootState } from "../store";
-import { useSelector } from "react-redux";
 import RulesInfoText from "./RulesInfoText";
 import { useGame } from "../hooks";
 import AnswerResultDisplay from "./AnswerResultDisplay";

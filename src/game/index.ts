@@ -1,4 +1,3 @@
-import { calc } from "@chakra-ui/react";
 import {
   calculateReverseMeasurement,
   randomRegularMeasurement,
@@ -57,7 +56,6 @@ export function createQuestionValue() {
  */
 export function createAnswerOptions(correctAnswer: number): number[] {
   // create array lenght of number of choices of reverse measurements and one of them is correct answer
-  const arrayLength = NUMBER_OF_CHOICES;
   const incorrectOptionsList: number[] = [];
   while (incorrectOptionsList.length < NUMBER_OF_CHOICES - 1) {
     const newOption = randomReverseMeasurement();

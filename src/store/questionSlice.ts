@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { TOTAL_QUESTIONS, type Question } from "../game";
+import { type Question } from "../game";
 
 interface InitialState {
   /**

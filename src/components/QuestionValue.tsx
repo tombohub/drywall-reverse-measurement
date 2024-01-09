@@ -1,6 +1,4 @@
 import { Heading } from "@chakra-ui/react";
-import { RootState } from "../store/store";
-import { useSelector } from "react-redux";
 import InchesDisplay from "./InchesDisplay";
 import { useGame } from "../hooks";
 

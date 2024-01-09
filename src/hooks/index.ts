@@ -4,7 +4,6 @@ import { questionActions } from "../store/questionSlice";
 import { gameActions } from "../store/gameSlice";
 import { COUNTDOWN_SECONDS, createQuestion, TOTAL_QUESTIONS } from "../game";
 import { useDebouncedCallback } from "use-debounce";
-import { useEffect } from "react";
 import { countdownActions } from "../store/countdownSlice";
 
 export function useGame() {
