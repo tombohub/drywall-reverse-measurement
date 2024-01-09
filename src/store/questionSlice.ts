@@ -7,8 +7,6 @@ interface InitialState {
   answerOptions: number[];
   correctAnswer: number | null;
   isAnswerSubmitted: boolean;
-  totalQuestions: number;
-  questionNumber: number;
 
   /**
    * True if answer is correct.
@@ -26,12 +24,6 @@ const initialState: InitialState = {
   correctAnswer: null,
   isAnswerSubmitted: false,
   isAnswerCorrect: null,
-  totalQuestions: TOTAL_QUESTIONS,
-  /**
-   * Game has multiple question.
-   * New game always start with question number 1
-   */
-  questionNumber: 1,
 };
 
 /**
@@ -53,9 +45,7 @@ const questionSlice = createSlice({
     setIsAnswerCorrect: (state, action: PayloadAction<boolean>) => {
       state.isAnswerCorrect = action.payload;
     },
-    incrementQuestionNumber: state => {
-      state.questionNumber = state.questionNumber + 1;
-    },
+
     reset: () => initialState,
   },
 });
