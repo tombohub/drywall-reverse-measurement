@@ -1,8 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface InitialState {
-  isGameStarted: boolean;
-  isGameOver: boolean;
+  status: "notStarted" | "started" | "over";
   questionNumber: number;
   totalQuestions: number;
   /**
@@ -12,8 +11,7 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-  isGameStarted: false,
-  isGameOver: false,
+  status: "notStarted",
 
   /**
    * Game has multiple question.
@@ -28,17 +26,22 @@ const gameSlice = createSlice({
   name: "game",
   initialState,
   reducers: {
-    setGameStarted: state => {
-      state.isGameStarted = true;
+    startNewGame: state => {
+      if (state.status === "notStarted" || state.status === "over") {
+        state.status = "started";
+      }
     },
+
     incrementQuestionNumber: state => {
       state.questionNumber += 1;
     },
     incrementScore: state => {
       state.score += 1;
     },
-    setGameOver: state => {
-      state.isGameOver = true;
+    finishGame: state => {
+      if (state.status !== "over") {
+        state.status = "over";
+      }
     },
     setTotalQuestions: (state, action: PayloadAction<number>) => {
       state.totalQuestions = action.payload;

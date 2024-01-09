@@ -13,15 +13,13 @@ import ScoreInfo from "./ScoreInfo";
 import QuestionCountdown from "./QuestionCountdown";
 
 export default function Content() {
-  const { isAnswerSubmitted, isGameOver, isCountdownRunning } = useGame();
-  const isGameStarted = useSelector(
-    (state: RootState) => state.game.isGameStarted
-  );
+  const { isAnswerSubmitted, gameStatus, isCountdownRunning } = useGame();
+
   return (
     <>
       <Header />
       <Container>
-        {!isGameStarted && <RulesInfoText />}
+        {gameStatus === "notStarted" && <RulesInfoText />}
         <Box
           display={"flex"}
           flexDirection={"column"}
@@ -31,8 +29,8 @@ export default function Content() {
           gap={2}
         >
           <br />
-          {!isGameStarted && <StartGameButton />}
-          {isGameStarted && !isGameOver && (
+          {gameStatus === "notStarted" && <StartGameButton />}
+          {gameStatus === "started" && (
             <>
               <Text fontSize={"x-small"} color={"gray.400"}>
                 If measurement is:
@@ -43,13 +41,15 @@ export default function Content() {
                 reverse measurement is:
               </Text>
               <MultiChoiceGroup />
+              <QuestionCountdown />
             </>
           )}
-          {isCountdownRunning && <QuestionCountdown />}
-          {isAnswerSubmitted && !isGameOver && <AnswerResultDisplay />}
-          {isGameOver && <ScoreInfo />}
+          {isAnswerSubmitted && gameStatus === "started" && (
+            <AnswerResultDisplay />
+          )}
+          {gameStatus === "over" && <ScoreInfo />}
           <br />
-          {isGameOver && <NewGameButton />}
+          {gameStatus === "over" && <NewGameButton />}
         </Box>
       </Container>
     </>

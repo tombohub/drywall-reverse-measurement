@@ -43,13 +43,6 @@ export function useGame() {
   );
 
   /**
-   * True if game has started
-   */
-  const isGameStarted = useSelector(
-    (state: RootState) => state.game.isGameStarted
-  );
-
-  /**
    * True if question countdown is running
    */
   const isCountdownRunning = useSelector(
@@ -57,9 +50,9 @@ export function useGame() {
   );
 
   /**
-   * True if game is over
+   * Game status state
    */
-  const isGameOver = useSelector((state: RootState) => state.game.isGameOver);
+  const gameStatus = useSelector((state: RootState) => state.game.status);
 
   /**
    * answer options offered as multi choice
@@ -93,7 +86,7 @@ export function useGame() {
 
     dispatch(gameActions.setTotalQuestions(TOTAL_QUESTIONS));
     newQuestion();
-    dispatch(gameActions.setGameStarted());
+    dispatch(gameActions.startNewGame());
     dispatch(countdownActions.startRunning());
   }
 
@@ -113,14 +106,14 @@ export function useGame() {
   }
 
   function finishGame() {
-    dispatch(gameActions.setGameOver());
+    dispatch(gameActions.finishGame());
   }
   /**
    *Answers the current question
    */
   function submitAnswer(answer: number | null) {
-    dispatch(countdownActions.stopRunning());
     // if answer is null player didn't answer in countdown time.
+    dispatch(countdownActions.stopRunning());
     const isCorrectAnswer = answer ? correctAnswer === answer : false;
     dispatch(questionActions.setIsAnswerSubmitted(true));
     dispatch(questionActions.setIsAnswerCorrect(isCorrectAnswer));
@@ -140,11 +133,7 @@ export function useGame() {
 
     submitAnswer,
 
-    /**
-     * True of game has started
-     */
-    isGameStarted,
-    isGameOver,
+    gameStatus,
 
     /**
      * answer options offered as multi choice
