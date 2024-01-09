@@ -1,18 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { PayloadAction } from "@reduxjs/toolkit";
 import { COUNTDOWN_SECONDS } from "../game";
 
 interface InitialState {
+  status: "idle" | "running";
   /**
    * how many seconds left in countdown
    */
   secondsLeft: number;
-  isCountdownRunning: boolean;
 }
 
 const initialState: InitialState = {
+  status: "idle",
   secondsLeft: COUNTDOWN_SECONDS,
-  isCountdownRunning: false,
 };
 
 const countdownSlice = createSlice({
@@ -24,10 +23,12 @@ const countdownSlice = createSlice({
       state.secondsLeft = state.secondsLeft - 1;
     },
     startRunning: state => {
-      state.isCountdownRunning = true;
+      if (state.status !== "running") state.status = "running";
     },
     stopRunning: state => {
-      state.isCountdownRunning = false;
+      if (state.status !== "idle") {
+        state.status = "idle";
+      }
     },
     reset: () => initialState,
   },

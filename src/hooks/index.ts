@@ -45,8 +45,8 @@ export function useGame() {
   /**
    * True if question countdown is running
    */
-  const isCountdownRunning = useSelector(
-    (state: RootState) => state.countdown.isCountdownRunning
+  const countdownStatus = useSelector(
+    (state: RootState) => state.countdown.status
   );
 
   /**
@@ -153,6 +153,6 @@ export function useGame() {
     totalQuestions,
     currentQuestionValue,
     countdownSeconds,
-    isCountdownRunning,
+    countdownStatus,
   };
 }

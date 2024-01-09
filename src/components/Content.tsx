@@ -13,7 +13,7 @@ import ScoreInfo from "./ScoreInfo";
 import QuestionCountdown from "./QuestionCountdown";
 
 export default function Content() {
-  const { isAnswerSubmitted, gameStatus, isCountdownRunning } = useGame();
+  const { isAnswerSubmitted, gameStatus } = useGame();
 
   return (
     <>
