@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { TOTAL_QUESTIONS } from "../game";
 
 interface InitialState {
   status: "notStarted" | "started" | "over";
@@ -18,7 +19,7 @@ const initialState: InitialState = {
    * New game always start with question number 1
    */
   questionNumber: 1,
-  totalQuestions: 0,
+  totalQuestions: TOTAL_QUESTIONS,
   score: 0,
 };
 
