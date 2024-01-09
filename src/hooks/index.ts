@@ -2,12 +2,17 @@ import { RootState } from "../store";
 import { useSelector, useDispatch } from "react-redux";
 import { questionActions } from "../store/questionSlice";
 import { gameActions } from "../store/gameSlice";
-import { createQuestion, TOTAL_QUESTIONS } from "../game";
+import { COUNTDOWN_SECONDS, createQuestion, TOTAL_QUESTIONS } from "../game";
 import { useDebouncedCallback } from "use-debounce";
+import { useEffect } from "react";
+import { countdownActions } from "../store/countdownSlice";
 
 export function useGame() {
   const dispatch = useDispatch();
-  const debouncedStartNewRound = useDebouncedCallback(startNewRound, 2000);
+  const debouncedStartNewQuestion = useDebouncedCallback(
+    startNextQuestion,
+    2000
+  );
   const debouncedFinishGame = useDebouncedCallback(finishGame, 2000);
 
   /**
@@ -21,6 +26,11 @@ export function useGame() {
   const currentQuestionNumber = useSelector(
     (state: RootState) => state.game.questionNumber
   );
+
+  const currentQuestionValue = useSelector(
+    (state: RootState) => state.question.question
+  );
+
   /**
    * Current question correct answer
    */
@@ -40,6 +50,13 @@ export function useGame() {
   );
 
   /**
+   * True if question countdown is running
+   */
+  const isCountdownRunning = useSelector(
+    (state: RootState) => state.countdown.isCountdownRunning
+  );
+
+  /**
    * True if game is over
    */
   const isGameOver = useSelector((state: RootState) => state.game.isGameOver);
@@ -55,24 +72,44 @@ export function useGame() {
     (state: RootState) => state.question.isAnswerSubmitted
   );
 
+  const countdownSeconds = COUNTDOWN_SECONDS;
+
+  /**
+   * Sets a state for a new question.
+   */
   function newQuestion() {
     const question = createQuestion();
-
     dispatch(questionActions.setNewQuestion(question));
   }
+
   /**
    * Starts a new game
    */
   function startNewGame() {
+    // reset all states
+    dispatch(gameActions.reset());
+    dispatch(questionActions.reset());
+    dispatch(countdownActions.reset());
+
     dispatch(gameActions.setTotalQuestions(TOTAL_QUESTIONS));
     newQuestion();
     dispatch(gameActions.setGameStarted());
+    dispatch(countdownActions.startRunning());
   }
 
-  function startNewRound() {
+  /**
+   * Start next question.
+   * Not meant for initial question.
+   * Initial question is created within {@link startNewGame} function
+   */
+  function startNextQuestion() {
+    // reset needed states
     dispatch(questionActions.reset());
+    dispatch(countdownActions.reset());
+
     newQuestion();
     dispatch(gameActions.incrementQuestionNumber());
+    dispatch(countdownActions.startRunning());
   }
 
   function finishGame() {
@@ -81,13 +118,15 @@ export function useGame() {
   /**
    *Answers the current question
    */
-  function submitAnswer(answer: number) {
-    const isCorrectAnswer = correctAnswer === answer;
+  function submitAnswer(answer: number | null) {
+    dispatch(countdownActions.stopRunning());
+    // if answer is null player didn't answer in countdown time.
+    const isCorrectAnswer = answer ? correctAnswer === answer : false;
     dispatch(questionActions.setIsAnswerSubmitted(true));
     dispatch(questionActions.setIsAnswerCorrect(isCorrectAnswer));
     if (isCorrectAnswer) dispatch(gameActions.incrementScore());
     if (currentQuestionNumber < TOTAL_QUESTIONS) {
-      debouncedStartNewRound();
+      debouncedStartNewQuestion();
     } else {
       debouncedFinishGame();
     }
@@ -124,5 +163,8 @@ export function useGame() {
     currentQuestionNumber,
     currentScore,
     totalQuestions,
+    currentQuestionValue,
+    countdownSeconds,
+    isCountdownRunning,
   };
 }

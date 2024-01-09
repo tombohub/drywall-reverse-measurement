@@ -2,16 +2,16 @@ import { atom } from "jotai";
 import { randomRegularMeasurement } from "../drywall";
 
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./counterSlice";
 import questionReducer from "./questionSlice";
 import gameReducer from "./gameSlice";
+import countdownReducer from "./countdownSlice";
 import { calculateReverseMeasurement } from "../drywall";
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     question: questionReducer,
     game: gameReducer,
+    countdown: countdownReducer,
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

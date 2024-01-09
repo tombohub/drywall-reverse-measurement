@@ -28,8 +28,8 @@ export default function AnswerOptionButton(props: AnswerOptionButtonProps) {
   const [isClicked, setIsClicked] = useState(false);
 
   /**
-   * Reset isClicked to false after each round.
-   * Otherwise it stays isClicke as true
+   * Reset isClicked to false after each question.
+   * Otherwise it stays isClicked as true
    */
   useEffect(() => {
     setIsClicked(false);
@@ -53,7 +53,8 @@ export default function AnswerOptionButton(props: AnswerOptionButtonProps) {
   };
 
   function handleOnClick() {
-    submitAnswer(props.answerOption);
+    submitAnswer(null);
+    // submitAnswer(props.answerOption);
     setIsClicked(true);
   }
 

@@ -12,7 +12,7 @@ export default function MultiChoiceGroup() {
     <>
       <Box display={"flex"} flexDirection={"column"} gap={2}>
         {answerOptions.map(option => (
-          <AnswerOptionButton answerOption={option} />
+          <AnswerOptionButton answerOption={option} key={option} />
         ))}
       </Box>
     </>

@@ -4,12 +4,17 @@ import {
   randomRegularMeasurement,
   randomReverseMeasurement,
 } from "../drywall";
-import { createRandomIntArrayWithIncludedNumber, shuffleArray } from "../utils";
+import { shuffleArray } from "../utils";
 
 /**
  * Number of choices to offer as an answer
  */
 const NUMBER_OF_CHOICES = 4;
+
+/**
+ * Time allowed to answer the question, in seconds
+ */
+export const COUNTDOWN_SECONDS = 5;
 
 /**
  * Total number of questions for each game

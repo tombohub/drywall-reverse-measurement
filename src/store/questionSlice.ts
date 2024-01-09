@@ -38,13 +38,13 @@ const questionSlice = createSlice({
       state.answerOptions = action.payload.answerOptions;
       state.correctAnswer = action.payload.correctAnswer;
     },
+
     setIsAnswerSubmitted: (state, action: PayloadAction<boolean>) => {
       state.isAnswerSubmitted = action.payload;
     },
     setIsAnswerCorrect: (state, action: PayloadAction<boolean>) => {
       state.isAnswerCorrect = action.payload;
     },
-
     reset: () => initialState,
   },
 });

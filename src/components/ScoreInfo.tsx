@@ -5,8 +5,8 @@ export default function ScoreInfo() {
   const { currentScore, totalQuestions } = useGame();
   return (
     <>
+      <Heading>Your score:</Heading>
       <Heading>
-        Your score: <br />
         {currentScore}/{totalQuestions}
       </Heading>
     </>
