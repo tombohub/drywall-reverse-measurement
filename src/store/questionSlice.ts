@@ -3,10 +3,26 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { TOTAL_QUESTIONS, type Question } from "../game";
 
 interface InitialState {
+  /**
+   * empty means question is not ready yet
+   * active means it's currently in play
+   * answered means player has submitted answer
+   */
+  status: "empty" | "active" | "answered";
+  /**
+   * value of the question
+   */
   question: null | number;
+
+  /**
+   * options for multiple choice
+   */
   answerOptions: number[];
+
+  /**
+   * value of the correct answer
+   */
   correctAnswer: number | null;
-  isAnswerSubmitted: boolean;
 
   /**
    * True if answer is correct.
@@ -22,7 +38,7 @@ const initialState: InitialState = {
   question: null,
   answerOptions: [],
   correctAnswer: null,
-  isAnswerSubmitted: false,
+  status: "empty",
   isAnswerCorrect: null,
 };
 
@@ -39,8 +55,10 @@ const questionSlice = createSlice({
       state.correctAnswer = action.payload.correctAnswer;
     },
 
-    setIsAnswerSubmitted: (state, action: PayloadAction<boolean>) => {
-      state.isAnswerSubmitted = action.payload;
+    setAnswerSubmitted: state => {
+      if (state.status !== "answered") {
+        state.status = "answered";
+      }
     },
     setIsAnswerCorrect: (state, action: PayloadAction<boolean>) => {
       state.isAnswerCorrect = action.payload;

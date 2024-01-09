@@ -62,7 +62,7 @@ export function useGame() {
   );
 
   const isAnswerSubmitted = useSelector(
-    (state: RootState) => state.question.isAnswerSubmitted
+    (state: RootState) => state.question.status
   );
 
   const countdownSeconds = COUNTDOWN_SECONDS;
@@ -114,7 +114,7 @@ export function useGame() {
     // if answer is null player didn't answer in countdown time.
     dispatch(countdownActions.stopRunning());
     const isCorrectAnswer = answer ? correctAnswer === answer : false;
-    dispatch(questionActions.setIsAnswerSubmitted(true));
+    dispatch(questionActions.setAnswerSubmitted());
     dispatch(questionActions.setIsAnswerCorrect(isCorrectAnswer));
     if (isCorrectAnswer) dispatch(gameActions.incrementScore());
     if (currentQuestionNumber < TOTAL_QUESTIONS) {
