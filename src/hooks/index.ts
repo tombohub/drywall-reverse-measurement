@@ -19,12 +19,12 @@ export function useGame() {
    * Total questions under the presumption state is used after the game starts
    */
   const totalQuestions = useSelector(
-    (state: RootState) => state.game.totalQuestions
+    (state: RootState) => state.question.totalQuestions
   );
   const currentScore = useSelector((state: RootState) => state.game.score);
 
   const currentQuestionNumber = useSelector(
-    (state: RootState) => state.game.questionNumber
+    (state: RootState) => state.question.questionNumber
   );
 
   const currentQuestionValue = useSelector(
@@ -84,7 +84,6 @@ export function useGame() {
     dispatch(questionActions.reset());
     dispatch(countdownActions.reset());
 
-    dispatch(gameActions.setTotalQuestions(TOTAL_QUESTIONS));
     newQuestion();
     dispatch(gameActions.startNewGame());
     dispatch(countdownActions.startRunning());
@@ -101,7 +100,7 @@ export function useGame() {
     dispatch(countdownActions.reset());
 
     newQuestion();
-    dispatch(gameActions.incrementQuestionNumber());
+    dispatch(questionActions.incrementQuestionNumber());
     dispatch(countdownActions.startRunning());
   }
 

@@ -3,8 +3,7 @@ import { TOTAL_QUESTIONS } from "../game";
 
 interface InitialState {
   status: "notStarted" | "started" | "over";
-  questionNumber: number;
-  totalQuestions: number;
+
   /**
    * Keeps track of the score
    */
@@ -14,12 +13,6 @@ interface InitialState {
 const initialState: InitialState = {
   status: "notStarted",
 
-  /**
-   * Game has multiple question.
-   * New game always start with question number 1
-   */
-  questionNumber: 1,
-  totalQuestions: TOTAL_QUESTIONS,
   score: 0,
 };
 
@@ -32,10 +25,6 @@ const gameSlice = createSlice({
         state.status = "started";
       }
     },
-
-    incrementQuestionNumber: state => {
-      state.questionNumber += 1;
-    },
     incrementScore: state => {
       state.score += 1;
     },
@@ -44,9 +33,7 @@ const gameSlice = createSlice({
         state.status = "over";
       }
     },
-    setTotalQuestions: (state, action: PayloadAction<number>) => {
-      state.totalQuestions = action.payload;
-    },
+
     reset: () => initialState,
   },
 });
