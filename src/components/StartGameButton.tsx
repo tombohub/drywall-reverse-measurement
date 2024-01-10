@@ -1,11 +1,11 @@
 import { Button } from "@chakra-ui/react";
-import { useGame } from "../hooks";
-
+import { startNewGame } from "../store/gameSlice";
+import { useAppDispatch } from "../store";
 export default function StartGameButton() {
-  const game = useGame();
+  const dispatch = useAppDispatch();
   return (
     <>
-      <Button onClick={game.startNewGame}>Start</Button>
+      <Button onClick={() => dispatch(startNewGame())}>Start</Button>
     </>
   );
 }

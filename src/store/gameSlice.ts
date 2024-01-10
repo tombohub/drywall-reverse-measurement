@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { TOTAL_QUESTIONS } from "../game";
+import { TOTAL_QUESTIONS, createQuestion } from "../game";
 import { AppThunk } from "./store";
+import { questionActions } from "./questionSlice";
+import { countdownActions } from "./countdownSlice";
 
 interface InitialState {
   status: "notStarted" | "started" | "over";
@@ -20,9 +22,9 @@ const initialState: InitialState = {
   totalQuestions: TOTAL_QUESTIONS,
   /**
    * Game has multiple question.
-   * New game always start with question number 1
+   * Start with zero so when we start game we increment number
    */
-  questionNumber: 1,
+  questionNumber: 0,
 };
 
 const gameSlice = createSlice({
@@ -50,10 +52,32 @@ const gameSlice = createSlice({
   },
 });
 
-export const startPlaying = (): AppThunk => (dispatch, getState) => {
-  dispatch(gameActions.startNewGame());
+export const startNewQuestion = (): AppThunk => (dispatch, getState) => {
+  const question = createQuestion();
+
+  dispatch(questionActions.reset());
+
+  dispatch(questionActions.newQuestion(question));
   dispatch(gameActions.incrementQuestionNumber());
 };
+
+export const startNewGame = (): AppThunk => (dispatch, getState) => {
+  dispatch(gameActions.reset());
+  dispatch(countdownActions.reset());
+
+  dispatch(gameActions.startNewGame());
+  dispatch(startNewQuestion());
+};
+
+export const submitAnswer =
+  (answer: number): AppThunk =>
+  (dispatch, getState) => {
+    const state = getState();
+    if (answer === state.question.correctAnswer) {
+      dispatch(gameActions.incrementScore());
+    }
+    dispatch(questionActions.submitAnswer(answer));
+  };
 
 export const gameActions = gameSlice.actions;
 export default gameSlice.reducer;

@@ -1,12 +1,12 @@
 import { Box } from "@chakra-ui/react";
 import AnswerOptionButton from "./AnswerOptionButton";
-import { useGame } from "../hooks";
+import { useAppSelector } from "../store";
 
 export default function MultiChoiceGroup() {
   /**
-   * Indicates if user has chose an answer
+   * answer options offered as multi choice
    */
-  const { answerOptions } = useGame();
+  const answerOptions = useAppSelector(state => state.question.answerOptions);
 
   return (
     <>

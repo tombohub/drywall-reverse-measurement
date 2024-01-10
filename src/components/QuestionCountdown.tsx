@@ -2,11 +2,13 @@ import { Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import useCountdown from "@bradgarropy/use-countdown";
 import { useGame } from "../hooks";
+import { useAppSelector } from "../store";
 export default function QuestionCountdown() {
-  const { countdownSeconds, submitAnswer } = useGame();
+  const secondsStart = useAppSelector(state => state.countdown.secondsStart);
+  const { submitAnswer } = useGame();
   const [countdownComplete, setCountdownComplete] = useState(false);
   const countdown = useCountdown({
-    seconds: countdownSeconds,
+    seconds: secondsStart,
     autoStart: true,
     onCompleted: () => setCountdownComplete(true),
   });

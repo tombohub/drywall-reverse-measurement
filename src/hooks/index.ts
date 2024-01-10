@@ -18,78 +18,15 @@ export function useGame() {
     2000
   );
   const debouncedFinishGame = useDebouncedCallback(finishGame, 2000);
-  /**
-   * Total questions under the presumption state is used after the game starts
-   */
-  const totalQuestions = useSelector(
-    (state: RootState) => state.game.totalQuestions
-  );
-  const currentScore = useAppSelector(state => state.game.score);
-  const currentQuestionNumber = useSelector(
-    (state: RootState) => state.game.questionNumber
-  );
 
-  const currentQuestionValue = useSelector(
-    (state: RootState) => state.question.question
+  const currentQuestionNumber = useAppSelector(
+    state => state.game.questionNumber
   );
 
   /**
    * Current question correct answer
    */
-  const correctAnswer = useSelector(
-    (state: RootState) => state.question.correctAnswer
-  );
-
-  const isAnswerCorrect = useSelector(
-    (state: RootState) => state.question.isAnswerCorrect
-  );
-
-  /**
-   * True if question countdown is running
-   */
-  const countdownStatus = useSelector(
-    (state: RootState) => state.countdown.status
-  );
-
-  /**
-   * Game status state
-   */
-  const gameStatus = useSelector((state: RootState) => state.game.status);
-
-  /**
-   * answer options offered as multi choice
-   */
-  const answerOptions = useSelector(
-    (state: RootState) => state.question.answerOptions
-  );
-
-  const isAnswerSubmitted = useSelector(
-    (state: RootState) => state.question.status
-  );
-
-  const countdownSeconds = COUNTDOWN_SECONDS;
-
-  /**
-   * Sets a state for a new question.
-   */
-  function newQuestion() {
-    const question = createQuestion();
-    dispatch(questionActions.setNewQuestion(question));
-  }
-
-  /**
-   * Starts a new game
-   */
-  function startNewGame() {
-    // reset all states
-    dispatch(gameActions.reset());
-    dispatch(questionActions.reset());
-    dispatch(countdownActions.reset());
-
-    newQuestion();
-    dispatch(gameActions.startNewGame());
-    dispatch(countdownActions.startRunning());
-  }
+  const correctAnswer = useAppSelector(state => state.question.correctAnswer);
 
   /**
    * Start next question.
@@ -114,10 +51,6 @@ export function useGame() {
    */
   function submitAnswer(answer: number | null) {
     // if answer is null player didn't answer in countdown time.
-    dispatch(countdownActions.stopRunning());
-    const isCorrectAnswer = answer ? correctAnswer === answer : false;
-    dispatch(questionActions.setAnswerSubmitted());
-    dispatch(questionActions.setIsAnswerCorrect(isCorrectAnswer));
     if (isCorrectAnswer) dispatch(gameActions.incrementScore());
     if (currentQuestionNumber < TOTAL_QUESTIONS) {
       debouncedStartNewQuestion();
@@ -127,34 +60,6 @@ export function useGame() {
   }
 
   return {
-    /**
-     * Start a new game
-     */
-    startNewGame,
-
     submitAnswer,
-
-    gameStatus,
-
-    /**
-     * answer options offered as multi choice
-     */
-    answerOptions,
-
-    /**
-     * Current question correct answer
-     */
-    correctAnswer,
-
-    isAnswerSubmitted,
-
-    isAnswerCorrect,
-
-    currentQuestionNumber,
-    currentScore,
-    totalQuestions,
-    currentQuestionValue,
-    countdownSeconds,
-    countdownStatus,
   };
 }

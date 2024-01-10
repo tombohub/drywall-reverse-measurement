@@ -1,15 +1,16 @@
 import { Button } from "@chakra-ui/react";
-import { useGame } from "../hooks";
+import { useAppDispatch } from "../store";
+import { startNewGame } from "../store/gameSlice";
 
 /**
  * Button which starts new game.
  * It appears after the game is over.
  */
 export default function NewGameButton() {
-  const game = useGame();
+  const dispatch = useAppDispatch();
   return (
     <>
-      <Button onClick={game.startNewGame}>New Game</Button>
+      <Button onClick={() => dispatch(startNewGame())}>New Game</Button>
     </>
   );
 }

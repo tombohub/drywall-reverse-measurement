@@ -1,9 +1,9 @@
 import { Heading } from "@chakra-ui/react";
 import InchesDisplay from "./InchesDisplay";
-import { useGame } from "../hooks";
+import { useAppSelector } from "../store";
 
 export default function QuestionValue() {
-  const { currentQuestionValue } = useGame();
+  const currentQuestionValue = useAppSelector(state => state.question.question);
 
   if (!currentQuestionValue) return "no question yet";
 

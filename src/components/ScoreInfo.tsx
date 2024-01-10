@@ -1,8 +1,9 @@
 import { Heading } from "@chakra-ui/react";
-import { useGame } from "../hooks";
+import { useAppSelector } from "../store";
 
 export default function ScoreInfo() {
-  const { currentScore, totalQuestions } = useGame();
+  const totalQuestions = useAppSelector(state => state.game.totalQuestions);
+  const currentScore = useAppSelector(state => state.game.score);
   return (
     <>
       <Heading>Your score:</Heading>

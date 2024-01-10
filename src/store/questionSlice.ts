@@ -49,19 +49,21 @@ const questionSlice = createSlice({
   name: "question",
   initialState,
   reducers: {
-    setNewQuestion: (state, action: PayloadAction<Question>) => {
-      state.question = action.payload.questionValue;
-      state.answerOptions = action.payload.answerOptions;
-      state.correctAnswer = action.payload.correctAnswer;
-    },
-
-    setAnswerSubmitted: state => {
-      if (state.status !== "answered") {
-        state.status = "answered";
+    newQuestion: (state, action: PayloadAction<Question>) => {
+      if (state.status !== "active") {
+        state.question = action.payload.questionValue;
+        state.answerOptions = action.payload.answerOptions;
+        state.correctAnswer = action.payload.correctAnswer;
+        state.status = "active";
       }
     },
-    setIsAnswerCorrect: (state, action: PayloadAction<boolean>) => {
-      state.isAnswerCorrect = action.payload;
+
+    submitAnswer: (state, action: PayloadAction<number>) => {
+      if (state.status !== "answered") {
+        state.status = "answered";
+        state.isAnswerCorrect =
+          action.payload === state.correctAnswer ? true : false;
+      }
     },
 
     reset: () => initialState,

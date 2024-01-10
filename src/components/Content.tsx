@@ -5,14 +5,14 @@ import Header from "./Header";
 import NewGameButton from "./NewGameButton";
 import StartGameButton from "./StartGameButton";
 import RulesInfoText from "./RulesInfoText";
-import { useGame } from "../hooks";
 import AnswerResultDisplay from "./AnswerResultDisplay";
 import ScoreInfo from "./ScoreInfo";
 import QuestionCountdown from "./QuestionCountdown";
+import { useAppSelector } from "../store";
 
 export default function Content() {
-  const { isAnswerSubmitted, gameStatus } = useGame();
-
+  const questionStatus = useAppSelector(state => state.question.status);
+  const gameStatus = useAppSelector(state => state.game.status);
   return (
     <>
       <Header />
@@ -39,10 +39,10 @@ export default function Content() {
                 reverse measurement is:
               </Text>
               <MultiChoiceGroup />
-              <QuestionCountdown />
+              {/* <QuestionCountdown /> */}
             </>
           )}
-          {isAnswerSubmitted && gameStatus === "started" && (
+          {questionStatus === "answered" && gameStatus === "started" && (
             <AnswerResultDisplay />
           )}
           {gameStatus === "over" && <ScoreInfo />}
