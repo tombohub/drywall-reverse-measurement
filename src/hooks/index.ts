@@ -1,4 +1,9 @@
-import { RootState } from "../store";
+import {
+  type RootState,
+  type AppDispatch,
+  useAppSelector,
+  useAppDispatch,
+} from "../store";
 import { useSelector, useDispatch } from "react-redux";
 import { questionActions } from "../store/questionSlice";
 import { gameActions } from "../store/gameSlice";
@@ -13,15 +18,13 @@ export function useGame() {
     2000
   );
   const debouncedFinishGame = useDebouncedCallback(finishGame, 2000);
-
   /**
    * Total questions under the presumption state is used after the game starts
    */
   const totalQuestions = useSelector(
     (state: RootState) => state.game.totalQuestions
   );
-  const currentScore = useSelector((state: RootState) => state.game.score);
-
+  const currentScore = useAppSelector(state => state.game.score);
   const currentQuestionNumber = useSelector(
     (state: RootState) => state.game.questionNumber
   );

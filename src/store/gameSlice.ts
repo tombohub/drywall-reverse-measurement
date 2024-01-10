@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TOTAL_QUESTIONS } from "../game";
+import { AppThunk } from "./store";
 
 interface InitialState {
   status: "notStarted" | "started" | "over";
@@ -48,6 +49,11 @@ const gameSlice = createSlice({
     reset: () => initialState,
   },
 });
+
+export const startPlaying = (): AppThunk => (dispatch, getState) => {
+  dispatch(gameActions.startNewGame());
+  dispatch(gameActions.incrementQuestionNumber());
+};
 
 export const gameActions = gameSlice.actions;
 export default gameSlice.reducer;
