@@ -77,6 +77,18 @@ export const submitAnswer =
       dispatch(gameActions.incrementScore());
     }
     dispatch(questionActions.submitAnswer(answer));
+
+    if (state.game.questionNumber < state.game.totalQuestions) {
+      // NOTE: time logic present, maybe decouple in future
+      // wait 2 seconds before new question
+      setTimeout(() => {
+        dispatch(startNewQuestion());
+      }, 2000);
+    } else {
+      setTimeout(() => {
+        dispatch(gameActions.finishGame());
+      }, 2000);
+    }
   };
 
 export const gameActions = gameSlice.actions;
