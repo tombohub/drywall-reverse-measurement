@@ -66,17 +66,18 @@ export const startNewGame = (): AppThunk => (dispatch, getState) => {
   dispatch(countdownActions.reset());
 
   dispatch(gameActions.startNewGame());
+  dispatch(countdownActions.startRunning());
   dispatch(startNewQuestion());
 };
 
 export const submitAnswer =
-  (answer: number): AppThunk =>
+  (answer: number | null): AppThunk =>
   (dispatch, getState) => {
     const state = getState();
     if (answer === state.question.correctAnswer) {
       dispatch(gameActions.incrementScore());
     }
-    dispatch(questionActions.submitAnswer(answer));
+    dispatch(questionActions.answerQuestion(answer));
 
     if (state.game.questionNumber < state.game.totalQuestions) {
       // NOTE: time logic present, maybe decouple in future
@@ -90,6 +91,14 @@ export const submitAnswer =
       }, 2000);
     }
   };
+
+export const startCountdown = (): AppThunk => (dispatch, getState) => {
+  dispatch(countdownActions.startRunning());
+
+  const countdownId = setInterval(() => {
+    dispatch(countdownActions.decrementSecond());
+  }, 1000);
+};
 
 export const gameActions = gameSlice.actions;
 export default gameSlice.reducer;

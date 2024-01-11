@@ -4,7 +4,7 @@ export default function Header() {
   return (
     <>
       <Box as="header" textAlign={"center"}>
-        <Heading size={"xl"}>Drywall Reverse Measurement</Heading>
+        <Heading size={"xl"}>Measurements from the other side</Heading>
       </Box>
     </>
   );

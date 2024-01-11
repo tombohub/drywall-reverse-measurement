@@ -18,7 +18,7 @@ export const COUNTDOWN_SECONDS = 5;
 /**
  * Total number of questions for each game
  */
-export const TOTAL_QUESTIONS = 3;
+export const TOTAL_QUESTIONS = 5;
 
 export interface Question {
   questionValue: number;

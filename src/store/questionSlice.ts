@@ -58,7 +58,7 @@ const questionSlice = createSlice({
       }
     },
 
-    submitAnswer: (state, action: PayloadAction<number>) => {
+    answerQuestion: (state, action: PayloadAction<number | null>) => {
       if (state.status !== "answered") {
         state.status = "answered";
         state.isAnswerCorrect =

@@ -39,9 +39,9 @@ export default function Content() {
                 reverse measurement is:
               </Text>
               <MultiChoiceGroup />
-              {/* <QuestionCountdown /> */}
             </>
           )}
+          {gameStatus === "started" && <QuestionCountdown />}
           {questionStatus === "answered" && gameStatus === "started" && (
             <AnswerResultDisplay />
           )}

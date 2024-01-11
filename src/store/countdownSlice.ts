@@ -4,14 +4,14 @@ import { COUNTDOWN_SECONDS } from "../game";
 interface InitialState {
   status: "idle" | "running";
   /**
-   * how many seconds is the start of a countdown
+   * how many seconds left. Initial state is also countdown start
    */
-  secondsStart: number;
+  secondsLeft: number;
 }
 
 const initialState: InitialState = {
   status: "idle",
-  secondsStart: COUNTDOWN_SECONDS,
+  secondsLeft: COUNTDOWN_SECONDS,
 };
 
 const countdownSlice = createSlice({
@@ -20,7 +20,9 @@ const countdownSlice = createSlice({
 
   reducers: {
     decrementSecond: state => {
-      state.secondsStart = state.secondsStart - 1;
+      if (state.status === "running") {
+        state.secondsLeft = state.secondsLeft - 1;
+      }
     },
     startRunning: state => {
       if (state.status !== "running") state.status = "running";
