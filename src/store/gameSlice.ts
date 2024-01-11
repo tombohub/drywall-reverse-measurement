@@ -92,13 +92,5 @@ export const submitAnswer =
     }
   };
 
-export const startCountdown = (): AppThunk => (dispatch, getState) => {
-  dispatch(countdownActions.startRunning());
-
-  const countdownId = setInterval(() => {
-    dispatch(countdownActions.decrementSecond());
-  }, 1000);
-};
-
 export const gameActions = gameSlice.actions;
 export default gameSlice.reducer;
