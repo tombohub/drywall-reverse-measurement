@@ -52,7 +52,7 @@ const gameSlice = createSlice({
   },
 });
 
-export const startNewQuestion = (): AppThunk => (dispatch, getState) => {
+export const startNewQuestion = (): AppThunk => dispatch => {
   const question = createQuestion();
 
   dispatch(questionActions.reset());
@@ -61,7 +61,7 @@ export const startNewQuestion = (): AppThunk => (dispatch, getState) => {
   dispatch(gameActions.incrementQuestionNumber());
 };
 
-export const startNewGame = (): AppThunk => (dispatch, getState) => {
+export const startNewGame = (): AppThunk => dispatch => {
   dispatch(gameActions.reset());
   dispatch(countdownActions.reset());
 
